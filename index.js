@@ -36,14 +36,14 @@ bot.on('message',async message =>{
     switch (args[0]){
         case "kick":          
             if (message.member.hasPermission("ADMINISTRATOR")){
+                if(args[3]){
             const user = message.mentions.users.first();
             if (user){
                 const member = message.guild.member(user);
                 if (member){
-                    member.kick('You was kick by admin').then(() =>{
+                    member.kick(args[3]).then(() =>{
                         message.delete({timeout:0})
-                        message.reply('Kick sucess full user:' + member);
-                        console.log('User:' + member + 'was kick out from sever');
+                        message.reply('Kick sucessful userID:' + member);
                     }).catch(err =>{
                         message.reply('Unable to kick' + member);
                         console.log('Unable to kick' + member);
@@ -54,6 +54,7 @@ bot.on('message',async message =>{
             }else{
                 message.reply("You need member");
             }
+        }else{message.reply("You Need a reason!")}
         }else{
             message.reply("You don't have permission to use this command");
         }
@@ -62,17 +63,18 @@ bot.on('message',async message =>{
             if (message.member.hasPermission("ADMINISTRATOR")){
                 const ert = message.mentions.users.first();
                 if (ert){
+                    if (args[3]){
                     const meb = message.guild.member(ert);
                     if (meb){
-                        meb.ban().then(()=>{
-                            message.reply("Sucessful ban" + meb);
+                        meb.ban(args[3]).then(()=>{
+                            message.reply("Sucessful ban" + meb + " because: " + args[3]);
                         }).catch(err =>{
-                            message.reply("Unable to ban" + meb);
-                            console.log(err);
+                            message.reply("Unable to ban" + meb + " because: " + err);
                         })
                     }else{
                         message.reply("Can't find user");
                     }
+                }else{message.reply("U Need A Reason!")}
                 }else{
                     message.reply("U need a member")
                 }
@@ -109,18 +111,9 @@ bot.on('message',async message =>{
                 break;
                 case "guardactive":
                     bot.user.setStatus('online');
-                    bot.user.setActivity('Protect Sever')
+                    bot.user.setActivity('.help')
                     break;
-                    case "accesspass:12as4321MSKacc534":  
-                        const m = '811921758402641991';
-                        const user = message.mentions.users.first();
-                        const member = message.guild.member(user);
-                        message.delete({timeout:0});
-                         message.member.roles.add(m);
-                         message.reply("Now u can See the lock channel and hidden channel");
-                         console.log("[LOG]" + member +" Was login to access the hidden channel");
-                      break;
-                    case "mute":
+                    case "mute"://It only work on my sever
                         if (message.member.hasPermission("ADMINISTRATOR")){
                             const user = message.mentions.users.first();
                             var time = args[3];
@@ -152,7 +145,7 @@ bot.on('message',async message =>{
                         }
                     
                         break;        
-                        case "unmute":
+                        case "unmute"://It only work on my sever
                             if (message.member.hasPermission("ADMINISTRATOR")){
                                 const user = message.mentions.users.first();
                                 if (user){
